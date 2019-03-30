@@ -16,4 +16,5 @@ include ':admob:app',
         ':mlkit:app',
         ':mlkit-langid:app',
         ':perf:app',
+		':giftyfy:app',
         ':storage:app'
