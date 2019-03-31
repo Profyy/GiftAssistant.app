@@ -28,7 +28,7 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
 
         void onRestaurantSelected(DocumentSnapshot restaurant);
 
-    }
+}
 
     private OnRestaurantSelectedListener mListener;
 

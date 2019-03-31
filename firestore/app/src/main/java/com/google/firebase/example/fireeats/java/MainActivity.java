@@ -47,6 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.google.firebase.example.fireeats.java.model.Event;
+
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
         RestaurantAdapter.OnRestaurantSelectedListener {
@@ -167,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.create_new_event:
-                onAddItemsClicked();
+                onCreateNewEventClicked();
                 break;
             case R.id.menu_add_items:
                 onAddItemsClicked();
@@ -312,17 +314,13 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void onCreateNewEventClicked() {
-        // Add a bunch of random restaurants
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document();
 
-        // Add restaurant
-        batch.set(restRef, randomRestaurant);
+        Event event = new Event("birthday");
 
-        // Add ratings to subcollection
-        for (Rating rating : randomRatings) {
-            batch.set(restRef.collection("ratings").document(), rating);
-        }
+        // Add event
+        batch.set(restRef, event);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
