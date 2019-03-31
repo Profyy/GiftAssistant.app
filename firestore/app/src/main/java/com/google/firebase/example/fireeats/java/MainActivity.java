@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.create_new_event:
+                onAddItemsClicked();
+                break;
             case R.id.menu_add_items:
                 onAddItemsClicked();
                 break;
@@ -307,6 +310,32 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
+
+    private void onCreateNewEventClicked() {
+        // Add a bunch of random restaurants
+        WriteBatch batch = mFirestore.batch();
+        DocumentReference restRef = mFirestore.collection("events").document();
+
+        // Add restaurant
+        batch.set(restRef, randomRestaurant);
+
+        // Add ratings to subcollection
+        for (Rating rating : randomRatings) {
+            batch.set(restRef.collection("ratings").document(), rating);
+        }
+
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Write batch succeeded.");
+                } else {
+                    Log.w(TAG, "write batch failed.", task.getException());
+                }
+            }
+        });
+    }
+
 
     private void showSignInErrorDialog(@StringRes int message) {
         AlertDialog dialog = new AlertDialog.Builder(this)
