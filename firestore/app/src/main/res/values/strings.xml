@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Friendly Eats</string>
+    <string name="app_name">Giftyfy</string>
 
     <string name="value_any_category">All food</string>
     <string name="value_any_city">Anywhere</string>
@@ -28,6 +28,7 @@
     <string name="sorted_by_popularity">sorted by popularity</string>
 
     <string name="add_random_items">Add Random Items</string>
+    <string name="create_new_event">Create new event</string>
     <string name="sign_out">Sign Out</string>
     <string name="divider_bullet">•</string>
     <string name="apply">Apply</string>

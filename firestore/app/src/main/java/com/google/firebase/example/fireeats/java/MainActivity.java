@@ -47,6 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.google.firebase.example.fireeats.java.model.Event;
+
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
         RestaurantAdapter.OnRestaurantSelectedListener {
@@ -166,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.create_new_event:
+                onCreateNewEventClicked();
+                break;
             case R.id.menu_add_items:
                 onAddItemsClicked();
                 break;
@@ -307,6 +312,28 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
     }
+
+    private void onCreateNewEventClicked() {
+        WriteBatch batch = mFirestore.batch();
+        DocumentReference restRef = mFirestore.collection("events").document();
+
+        Event event = new Event("birthday");
+
+        // Add event
+        batch.set(restRef, event);
+
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Write batch succeeded.");
+                } else {
+                    Log.w(TAG, "write batch failed.", task.getException());
+                }
+            }
+        });
+    }
+
 
     private void showSignInErrorDialog(@StringRes int message) {
         AlertDialog dialog = new AlertDialog.Builder(this)
