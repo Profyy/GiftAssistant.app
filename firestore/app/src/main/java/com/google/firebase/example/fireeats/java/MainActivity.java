@@ -62,12 +62,6 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.textCurrentSearch)
-    TextView mCurrentSearchView;
-
-    @BindView(R.id.textCurrentSortBy)
-    TextView mCurrentSortByView;
-
     @BindView(R.id.recyclerRestaurants)
     RecyclerView mRestaurantsRecycler;
 
@@ -168,12 +162,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.create_new_event:
-                onCreateNewEventClicked();
-                break;
-            case R.id.menu_add_items:
-                onAddItemsClicked();
-                break;
             case R.id.menu_sign_out:
                 AuthUI.getInstance().signOut(this);
                 startSignIn();
@@ -203,17 +191,10 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @OnClick(R.id.filterBar)
+    @OnClick(R.id.buttonNewEvent)
     public void onFilterClicked() {
         // Show the dialog containing filter options
         mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
-    }
-
-    @OnClick(R.id.buttonClearFilter)
-    public void onClearFilterClicked() {
-        mFilterDialog.resetFilters();
-
-        onFilter(Filters.getDefault());
     }
 
     @Override
@@ -256,10 +237,6 @@ public class MainActivity extends AppCompatActivity implements
 
         // Update the query
         mAdapter.setQuery(query);
-
-        // Set header
-        mCurrentSearchView.setText(Html.fromHtml(filters.getSearchDescription(this)));
-        mCurrentSortByView.setText(filters.getOrderDescription(this));
 
         // Save filters
         mViewModel.setFilters(filters);

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Giftyfy</string>
 
-    <string name="value_any_category">All food</string>
+    <string name="value_any_category">All events</string>
     <string name="value_any_city">Anywhere</string>
     <string name="value_any_price">Any price</string>
 
@@ -48,19 +48,9 @@
     <!-- Types of food I could think of in 5 minutes -->
     <string-array name="categories">
         <item>@string/value_any_category</item>
-
-        <item>Brunch</item>
-        <item>Burgers</item>
-        <item>Coffee</item>
-        <item>Deli</item>
-        <item>Dim Sum</item>
-        <item>Indian</item>
-        <item>Italian</item>
-        <item>Mediterranean</item>
-        <item>Mexican</item>
-        <item>Pizza</item>
-        <item>Ramen</item>
-        <item>Sushi</item>
+        <item>Birthday</item>
+        <item>Wedding</item>
+        <item>Graduation</item>
     </string-array>
     ite
 
