@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
-    private FilterDialogFragment mFilterDialog;
+    private NewEventFragment mNewEvent;
     private RestaurantAdapter mAdapter;
 
     private MainActivityViewModel mViewModel;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements
         mRestaurantsRecycler.setAdapter(mAdapter);
 
         // Filter Dialog
-        mFilterDialog = new FilterDialogFragment();
+        mNewEvent = new NewEventFragment();
     }
 
     @Override
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements
     @OnClick(R.id.buttonNewEvent)
     public void onFilterClicked() {
         // Show the dialog containing filter options
-        mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
+        mNewEvent.show(getSupportFragmentManager(), NewEventFragment.TAG);
     }
 
     @Override
