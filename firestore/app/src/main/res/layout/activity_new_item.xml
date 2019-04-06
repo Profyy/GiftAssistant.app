@@ -34,6 +34,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:focusable="false"
+        android:hint="Choose a date"
         android:maxLines="1" />
 
     <android.support.design.widget.FloatingActionButton
@@ -50,14 +51,5 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_navigation_check_24"
         app:backgroundTint="@color/fui_bgPhone" />
-
-    <Button
-        android:id="@+id/setDateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onButtonClicked"
-        android:text="Set Date"
-        android:layout_below="@id/fieldDate"
-        />
 
 </RelativeLayout>

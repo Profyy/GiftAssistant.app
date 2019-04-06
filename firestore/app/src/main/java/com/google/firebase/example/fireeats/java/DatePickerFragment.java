@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.google.firebase.example.fireeats.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,14 +37,18 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        Date date = new Date(year, month, day);
+
+        SimpleDateFormat dayofWeekFormat = new SimpleDateFormat("EEE", Locale.US);
+        String dayOfWeek = dayofWeekFormat.format(date);
+
+        SimpleDateFormat monthNameFormat = new SimpleDateFormat("MMM", Locale.US);
+        String monthName = monthNameFormat.format(date);
+
         //Do something with the date chosen by the user
         TextView tv = (TextView) getActivity().findViewById(R.id.fieldDate);
-        tv.setText("Date changed...");
-        tv.setText(tv.getText() + "\nYear: " + year);
-        tv.setText(tv.getText() + "\nMonth: " + month);
-        tv.setText(tv.getText() + "\nDay of Month: " + day);
 
-        String stringOfDate = day + "/" + month + "/" + year;
-        tv.setText(tv.getText() + "\n\nFormatted date: " + stringOfDate);
+        String stringOfDate =  dayOfWeek + " " + day + "/" + monthName + "/" + year;
+        tv.setText(stringOfDate);
     }
 }

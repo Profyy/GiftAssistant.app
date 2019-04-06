@@ -47,9 +47,8 @@ public class NewItemActivity extends BaseActivity {
             }
         });
 
+        mDate.setOnClickListener(new View.OnClickListener() {
 
-        mSetDateButton = findViewById(R.id.setDateButton);
-        mSetDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
