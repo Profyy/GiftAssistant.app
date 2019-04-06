@@ -1,13 +1,13 @@
 package com.google.firebase.example.fireeats.java;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,63 +17,45 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.Calendar;
+
 public class NewItemActivity extends BaseActivity {
+
+    final Calendar myCalendar = Calendar.getInstance();
 
     private static final String TAG = "NewItemActivity";
     private static final String REQUIRED = "Required";
 
     private FirebaseFirestore mFirestore;
 
-    private EditText mTitleField;
-    private EditText mBodyField;
+    private EditText mDate;
     private FloatingActionButton mSubmitButton;
+    private Button mSetDateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_new_item);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_item);
 
-            mTitleField = findViewById(R.id.fieldTitle);
-            mBodyField = findViewById(R.id.fieldBody);
-            mSubmitButton = findViewById(R.id.fabSubmitNewItem);
+        mDate = findViewById(R.id.fieldDate);
+        mSubmitButton = findViewById(R.id.fabSubmitNewItem);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitPost();
+                onCreateNewEventClicked();
             }
         });
-    }
 
-    private void submitPost() {
-        final String title = mTitleField.getText().toString();
-        final String body = mBodyField.getText().toString();
 
-        // Title is required
-        if (TextUtils.isEmpty(title)) {
-            mTitleField.setError(REQUIRED);
-            return;
-        }
-
-        // Body is required
-        if (TextUtils.isEmpty(body)) {
-            mBodyField.setError(REQUIRED);
-            return;
-        }
-
-        // Disable button so there are no multi-posts
-        setEditingEnabled(false);
-        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
-    }
-
-    private void setEditingEnabled(boolean enabled) {
-        mTitleField.setEnabled(enabled);
-        mBodyField.setEnabled(enabled);
-        if (enabled) {
-            mSubmitButton.show();
-        } else {
-            mSubmitButton.hide();
-        }
+        mSetDateButton = findViewById(R.id.setDateButton);
+        mSetDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(),"Date Picker");
+            }
+        });
     }
 
     private void onCreateNewEventClicked() {
@@ -96,5 +78,4 @@ public class NewItemActivity extends BaseActivity {
             }
         });
     }
-
 }

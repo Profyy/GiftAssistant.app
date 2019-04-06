@@ -90,7 +90,7 @@ public class Filters {
 
         if (category == null && city == null) {
             desc.append("<b>");
-            desc.append(context.getString(R.string.all_restaurants));
+            desc.append(context.getString(R.string.all_items));
             desc.append("</b>");
         }
 

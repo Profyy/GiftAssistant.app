@@ -5,33 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/fieldTitle"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme"
+        app:logo="@drawable/ic_gift_icon_24px"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:title="@string/app_name"
+        app:titleMarginStart="24dp"
+        app:titleTextColor="@android:color/white" />
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        style="@style/AppTheme.FilterSpinner"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="16dp"
+        android:entries="@array/categories" />
+
+    <EditText
+        android:id="@+id/fieldDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerCategory"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Title"
+        android:focusable="false"
         android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/fieldBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fieldTitle"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        android:hint="Write your post..."
-        android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:scrollHorizontally="false" />
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabSubmitNewEvent"
+        android:id="@+id/fabSubmitNewItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -44,5 +50,14 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_navigation_check_24"
         app:backgroundTint="@color/fui_bgPhone" />
+
+    <Button
+        android:id="@+id/setDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onButtonClicked"
+        android:text="Set Date"
+        android:layout_below="@id/fieldDate"
+        />
 
 </RelativeLayout>
