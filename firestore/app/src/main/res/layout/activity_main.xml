@@ -125,10 +125,6 @@
         android:visibility="gone"
         tools:visibility="gone">
 
-        <ImageView
-            style="@style/AppTheme.PizzaGuy"
-            android:src="@drawable/pizza_monster" />
-
         <TextView
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
@@ -149,7 +145,7 @@
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/fabCreateNewItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

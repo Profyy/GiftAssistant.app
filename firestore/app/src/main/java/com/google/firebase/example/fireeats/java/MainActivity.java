@@ -128,6 +128,14 @@ public class MainActivity extends AppCompatActivity implements
 
         // Filter Dialog
         mFilterDialog = new FilterDialogFragment();
+
+
+        findViewById(R.id.fabCreateNewItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NewItemActivity.class));
+            }
+        });
     }
 
     @Override
