@@ -30,17 +30,24 @@ public class NewItemActivity extends BaseActivity {
 
     private FirebaseFirestore mFirestore;
 
+    private Spinner spinner;
+    private EditText mHost;
     private EditText mDate;
     private EditText mTime;
     private FloatingActionButton mSubmitButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerCategory);
+        // Firestore
+        mFirestore = FirebaseFirestore.getInstance();
 
+
+        // Type
         Context context=getApplicationContext();
         String[] categories = context.getResources().getStringArray(R.array.categories);
         // Initializing an ArrayAdapter
@@ -48,12 +55,15 @@ public class NewItemActivity extends BaseActivity {
                 this,R.layout.spinner_item,categories
         );
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner = (Spinner) findViewById(R.id.spinnerCategory);
         spinner.setAdapter(spinnerArrayAdapter);
 
+        // Host
+        mHost = findViewById(R.id.host);
 
+        // Date
         mDate = findViewById(R.id.fieldDate);
         mDate.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
@@ -62,6 +72,7 @@ public class NewItemActivity extends BaseActivity {
         });
 
 
+        // Time
         mTime = findViewById(R.id.fieldTime);
         mTime.setOnClickListener(new View.OnClickListener() {
 
@@ -72,6 +83,7 @@ public class NewItemActivity extends BaseActivity {
             }
         });
 
+        //Submit
         mSubmitButton = findViewById(R.id.fabSubmitNewItem);
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +94,16 @@ public class NewItemActivity extends BaseActivity {
     }
 
     private void onCreateNewEventClicked() {
+        String type = spinner.getSelectedItem().toString();
+        String host = mHost.getText().toString();
+        String date = mDate.getText().toString();
+        String time = mTime.getText().toString();
+
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document();
 
-        Event event = new Event("birthday");
+        Event event = new Event(type, host, date, time);
+
 
         // Add event
         batch.set(restRef, event);
