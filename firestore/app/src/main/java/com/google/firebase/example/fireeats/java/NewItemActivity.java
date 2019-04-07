@@ -1,13 +1,15 @@
 package com.google.firebase.example.fireeats.java;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,30 +31,52 @@ public class NewItemActivity extends BaseActivity {
     private FirebaseFirestore mFirestore;
 
     private EditText mDate;
+    private EditText mTime;
     private FloatingActionButton mSubmitButton;
-    private Button mSetDateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerCategory);
+
+        Context context=getApplicationContext();
+        String[] categories = context.getResources().getStringArray(R.array.categories);
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,categories
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+
+
         mDate = findViewById(R.id.fieldDate);
-        mSubmitButton = findViewById(R.id.fabSubmitNewItem);
-
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCreateNewEventClicked();
-            }
-        });
-
         mDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(),"Date Picker");
+            }
+        });
+
+
+        mTime = findViewById(R.id.fieldTime);
+        mTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getFragmentManager(),"Date Picker");
+            }
+        });
+
+        mSubmitButton = findViewById(R.id.fabSubmitNewItem);
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCreateNewEventClicked();
             }
         });
     }

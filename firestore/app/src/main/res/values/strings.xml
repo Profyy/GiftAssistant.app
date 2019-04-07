@@ -48,11 +48,14 @@
     <string-array name="categories">
         <item>@string/value_any_category</item>
         <item>Birhday</item>
-        <item>Wedding</item>
         <item>Graduate</item>
+        <item>Wedding</item>
+        <item>Bachelorette</item>
+        <item>Bachelore</item>
+        <item>Other</item>
+
 
     </string-array>
-    ite
 
     <!-- 50 most populous cities in the US -->
     <string-array name="cities">

@@ -22,19 +22,37 @@
         style="@style/AppTheme.FilterSpinner"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="16dp"
+        android:textSize="30sp"
         android:entries="@array/categories" />
 
     <EditText
         android:id="@+id/fieldDate"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinnerCategory"
-        android:layout_marginBottom="5dp"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
         android:focusable="false"
+        android:gravity="center_horizontal"
         android:hint="Choose a date"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/fieldTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fieldDate"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+        android:focusable="false"
+        android:gravity="center_horizontal"
+        android:hint="Choose time"
         android:maxLines="1" />
 
     <android.support.design.widget.FloatingActionButton
