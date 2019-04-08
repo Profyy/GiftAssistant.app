@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.model.Event;
 import com.google.firebase.example.fireeats.java.model.Restaurant;
 import com.google.firebase.example.fireeats.java.util.RestaurantUtil;
 import com.google.firebase.firestore.Query;
@@ -23,7 +24,7 @@ public class Filters {
 
     public static Filters getDefault() {
         Filters filters = new Filters();
-        filters.setSortBy(Restaurant.FIELD_AVG_RATING);
+        filters.setSortBy(Event.FIELD_ID);
         filters.setSortDirection(Query.Direction.DESCENDING);
 
         return filters;
