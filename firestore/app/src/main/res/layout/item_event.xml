@@ -7,6 +7,13 @@
     android:orientation="vertical"
     android:padding="8dp">
 
+    <ImageView
+        android:id="@+id/eventItemImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#757575"
+        android:scaleType="centerCrop"/>
+
     <TextView
         android:id="@+id/eventHostName"
         style="@style/AppTheme.Subheader"
@@ -15,6 +22,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="-2dp"
+        android:layout_toRightOf="@+id/eventItemImage"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="Hristo Ginev" />

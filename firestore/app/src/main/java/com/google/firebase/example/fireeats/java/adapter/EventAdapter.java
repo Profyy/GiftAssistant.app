@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Event;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -60,6 +62,10 @@ public class EventAdapter extends FirestoreAdapter<EventAdapter.ViewHolder> {
         @BindView(R.id.eventItemCountry)
         TextView eventItemCountry;
 
+        @BindView(R.id.eventItemImage)
+        ImageView imageView;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,6 +77,11 @@ public class EventAdapter extends FirestoreAdapter<EventAdapter.ViewHolder> {
 
             Event event = snapshot.toObject(Event.class);
             Resources resources = itemView.getResources();
+
+            // Load image
+            Glide.with(imageView.getContext())
+                    .load(event.getPhoto())
+                    .into(imageView);
 
             eventHostName.setText(event.getHost());
             eventItemType.setText(event.getType());

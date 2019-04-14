@@ -12,6 +12,7 @@ public class Event {
     private String time;
     private String city;
     private String country;
+    private String photo;
 
     public Event() {}
     public Event(String type, String host, String date, String time, String country, String city) {
@@ -22,7 +23,6 @@ public class Event {
         this.time = time;
         this.city = city;
         this.country = country;
-
     }
 
     public Date getCreated() {
@@ -79,5 +79,13 @@ public class Event {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
