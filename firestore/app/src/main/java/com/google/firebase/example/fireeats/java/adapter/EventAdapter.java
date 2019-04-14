@@ -45,11 +45,20 @@ public class EventAdapter extends FirestoreAdapter<EventAdapter.ViewHolder> {
         @BindView(R.id.eventHostName)
         TextView eventHostName;
 
-        @BindView(R.id.eventItemPlace)
-        TextView eventItemPlace;
+        @BindView(R.id.eventItemType)
+        TextView eventItemType;
 
         @BindView(R.id.eventItemDate)
         TextView eventItemDate;
+
+        @BindView(R.id.eventItemTime)
+        TextView eventItemTime;
+
+        @BindView(R.id.eventItemCity)
+        TextView eventItemCity;
+
+        @BindView(R.id.eventItemCountry)
+        TextView eventItemCountry;
 
 
         public ViewHolder(View itemView) {
@@ -64,8 +73,11 @@ public class EventAdapter extends FirestoreAdapter<EventAdapter.ViewHolder> {
             Resources resources = itemView.getResources();
 
             eventHostName.setText(event.getHost());
-            eventItemPlace.setText(event.getPlace());
+            eventItemType.setText(event.getType());
             eventItemDate.setText(event.getDate());
+            eventItemTime.setText(event.getTime() + ",");
+            eventItemCity.setText(event.getCity() + ",");
+            eventItemCountry.setText(event.getCountry());
 
             // Click listener
             itemView.setOnClickListener(new View.OnClickListener() {

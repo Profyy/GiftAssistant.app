@@ -17,26 +17,60 @@
         android:layout_marginTop="-2dp"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="Foo's Bar" />
+        tools:text="Hristo Ginev" />
 
     <TextView
-        android:id="@+id/eventItemPlace"
+        android:id="@+id/eventItemType"
         style="@style/AppTheme.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/eventHostName"
         android:layout_below="@+id/eventHostName"
         android:textColor="@color/greySecondary"
-        tools:text="Italian" />
+        tools:text="Wedding" />
+
+    <TextView
+        android:id="@+id/eventItemTime"
+        style="@style/AppTheme.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/eventItemDate"
+        android:textColor="@color/greySecondary"
+        android:textStyle="bold"
+        tools:text="Time" />
 
     <TextView
         android:id="@+id/eventItemDate"
         style="@style/AppTheme.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/eventItemPlace"
-        android:layout_below="@+id/eventItemPlace"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/greySecondary"
-        tools:text="$$$" />
+        android:textStyle="bold"
+        tools:text="Date" />
+
+    <TextView
+        android:id="@+id/eventItemCity"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/eventItemCountry"
+        android:layout_below="@+id/eventItemDate"
+        android:textColor="@color/greySecondary"
+        tools:text="City" />
+
+    <TextView
+        android:id="@+id/eventItemCountry"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/eventItemDate"
+        android:textColor="@color/greySecondary"
+        tools:text="Country" />
+
 
 </RelativeLayout>

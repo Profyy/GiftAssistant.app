@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,10 +31,12 @@ public class NewItemActivity extends BaseActivity {
 
     private FirebaseFirestore mFirestore;
 
-    private Spinner spinner;
+    private Spinner spinnerType;
     private EditText mHost;
     private EditText mDate;
     private EditText mTime;
+    private Spinner spinnerCountry;
+    private Spinner spinnerCity;
     private FloatingActionButton mSubmitButton;
 
 
@@ -51,12 +54,12 @@ public class NewItemActivity extends BaseActivity {
         Context context=getApplicationContext();
         String[] categories = context.getResources().getStringArray(R.array.categories);
         // Initializing an ArrayAdapter
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> spinnerArrayAdapterType = new ArrayAdapter<String>(
                 this,R.layout.spinner_item,categories
         );
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner = (Spinner) findViewById(R.id.spinnerCategory);
-        spinner.setAdapter(spinnerArrayAdapter);
+        spinnerArrayAdapterType.setDropDownViewResource(R.layout.spinner_item);
+        spinnerType = (Spinner) findViewById(R.id.spinnerCategory);
+        spinnerType.setAdapter(spinnerArrayAdapterType);
 
         // Host
         mHost = findViewById(R.id.host);
@@ -83,6 +86,24 @@ public class NewItemActivity extends BaseActivity {
             }
         });
 
+        String[] countries = context.getResources().getStringArray(R.array.countries);
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapterCountries = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,countries
+        );
+        spinnerArrayAdapterCountries.setDropDownViewResource(R.layout.spinner_item);
+        spinnerCountry = (Spinner) findViewById(R.id.country);
+        spinnerCountry.setAdapter(spinnerArrayAdapterCountries);
+
+        String[] cities = context.getResources().getStringArray(R.array.cities);
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapterCities = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,cities
+        );
+        spinnerArrayAdapterCities.setDropDownViewResource(R.layout.spinner_item);
+        spinnerCity = (Spinner) findViewById(R.id.city);
+        spinnerCity.setAdapter(spinnerArrayAdapterCities);
+
         //Submit
         mSubmitButton = findViewById(R.id.fabSubmitNewItem);
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -94,15 +115,17 @@ public class NewItemActivity extends BaseActivity {
     }
 
     private void onCreateNewEventClicked() {
-        String type = spinner.getSelectedItem().toString();
+        String type = spinnerType.getSelectedItem().toString();
         String host = mHost.getText().toString();
         String date = mDate.getText().toString();
         String time = mTime.getText().toString();
+        String country = spinnerCountry.getSelectedItem().toString();
+        String city = spinnerCity.getSelectedItem().toString();
 
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document();
 
-        Event event = new Event(type, host, date, time);
+        Event event = new Event(type, host, date, time, country, city);
 
 
         // Add event
@@ -113,6 +136,8 @@ public class NewItemActivity extends BaseActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Write batch succeeded.");
+                    Toast.makeText(getApplicationContext(),"Created",Toast.LENGTH_LONG).show();
+
                 } else {
                     Log.w(TAG, "write batch failed.", task.getException());
                 }

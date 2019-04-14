@@ -24,9 +24,8 @@ public class Filters {
 
     public static Filters getDefault() {
         Filters filters = new Filters();
-        filters.setSortBy(Event.FIELD_ID);
+        filters.setSortBy(Event.FIELD_TYPE);
         filters.setSortDirection(Query.Direction.DESCENDING);
-
         return filters;
     }
 

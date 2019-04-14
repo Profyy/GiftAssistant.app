@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get ${LIMIT} restaurants
         mQuery = mFirestore.collection("events")
-                .orderBy("avgRating", Query.Direction.DESCENDING)
+                .orderBy("host", Query.Direction.DESCENDING)
                 .limit(LIMIT);
 
         // RecyclerView

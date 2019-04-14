@@ -5,23 +5,24 @@ import java.util.Date;
 public class Event {
 
     public static final String FIELD_TYPE = "type";
-    public static final String FIELD_ID = "id";
-    private int id;
     private Date created;
     private String type;
     private String host;
     private String date;
     private String time;
-    private String place;
+    private String city;
+    private String country;
 
     public Event() {}
-    public Event(String type, String host, String date, String time) {
+    public Event(String type, String host, String date, String time, String country, String city) {
         this.created = new Date();
         this.type = type;
         this.host = host;
         this.date = date;
         this.time = time;
-        this.place = place;
+        this.city = city;
+        this.country = country;
+
     }
 
     public Date getCreated() {
@@ -64,19 +65,19 @@ public class Event {
         this.time = time;
     }
 
-    public String getPlace() {
-        return place;
+    public String getCity() {
+        return city;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public int getId() {
-        return id;
+    public String getCountry() {
+        return country;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

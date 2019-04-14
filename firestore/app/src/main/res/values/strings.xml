@@ -2,8 +2,9 @@
     <string name="app_name">Giftyfy</string>
 
     <string name="value_any_category">Select celebration type</string>
-    <string name="value_any_city">Anywhere</string>
+    <string name="value_any_city">Coose city</string>
     <string name="value_any_price">Any price</string>
+    <string name="value_any_country">Coose country</string>
 
     <string name="price_1">$</string>
     <string name="price_2">$$</string>
@@ -53,70 +54,53 @@
         <item>Bachelorette</item>
         <item>Bachelore</item>
         <item>Other</item>
+    </string-array>
 
-
+    <string-array name="countries">
+        <item>@string/value_any_country</item>
+        <item>Bulgaria</item>
     </string-array>
 
     <!-- 50 most populous cities in the US -->
     <string-array name="cities">
         <item>@string/value_any_city</item>
 
-        <item>Albuquerque</item>
-        <item>Arlington</item>
-        <item>Atlanta</item>
-        <item>Austin</item>
-        <item>Baltimore</item>
-        <item>Boston</item>
-        <item>Charlotte</item>
-        <item>Chicago</item>
-        <item>Cleveland</item>
-        <item>Colorado Springs</item>
-        <item>Columbus</item>
-        <item>Dallas</item>
-        <item>Denver</item>
-        <item>Detroit</item>
-        <item>El Paso</item>
-        <item>Fort Worth</item>
-        <item>Fresno</item>
-        <item>Houston</item>
-        <item>Indianapolis</item>
-        <item>Jacksonville</item>
-        <item>Kansas City</item>
-        <item>Las Vegas</item>
-        <item>Long Beach</item>
-        <item>Los Angeles</item>
-        <item>Louisville</item>
-        <item>Memphis</item>
-        <item>Mesa</item>
-        <item>Miami</item>
-        <item>Milwaukee</item>
-        <item>Nashville</item>
-        <item>New York</item>
-        <item>Oakland</item>
-        <item>Oklahoma</item>
-        <item>Omaha</item>
-        <item>Philadelphia</item>
-        <item>Phoenix</item>
-        <item>Portland</item>
-        <item>Raleigh</item>
-        <item>Sacramento</item>
-        <item>San Antonio</item>
-        <item>San Diego</item>
-        <item>San Francisco</item>
-        <item>San Jose</item>
-        <item>Tucson</item>
-        <item>Tulsa</item>
-        <item>Virginia Beach</item>
-        <item>Washington</item>
+        <item>Blagoevgrad</item>
+        <item>Burgas</item>
+        <item>Devin</item>
+        <item>Dobrich</item>
+        <item>Gabrovo</item>
+        <item>Haskovo</item>
+        <item>Kardzhali</item>
+        <item>Lovech</item>
+        <item>Montana</item>
+        <item>Pazardzhik</item>
+        <item>Pernik</item>
+        <item>Pleven</item>
+        <item>Plovdiv</item>
+        <item>Razgrad</item>
+        <item>Ruse</item>
+        <item>Shumen</item>
+        <item>Silistra</item>
+        <item>Sliven</item>
+        <item>Smolyan</item>
+        <item>Sofia</item>
+        <item>Stara Zagora</item>
+        <item>Targovishte</item>
+        <item>Varna</item>
+        <item>Veliko Tarnovo</item>
+        <item>Vidin</item>
+        <item>Vratsa</item>
+        <item>Yambol</item>
+        <item>Zlatograd</item>
     </string-array>
 
-    <!-- Price filters -->
     <string-array name="prices">
-        <item>@string/value_any_price</item>
+    <item>@string/value_any_price</item>
 
-        <item>@string/price_1</item>
-        <item>@string/price_2</item>
-        <item>@string/price_3</item>
+    <item>@string/price_1</item>
+    <item>@string/price_2</item>
+    <item>@string/price_3</item>
     </string-array>
 
     <!-- Ways you can sort restaurants -->
