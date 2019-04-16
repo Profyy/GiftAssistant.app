@@ -76,6 +76,9 @@ public class EventDatailActivity extends AppCompatActivity
         // Get reference to the event
         mEventRef = mFirestore.collection("events").document(eventId);
         mInviteDialog = new InviteDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("eventId", eventId);
+        mInviteDialog.setArguments(args);
     }
 
     @Override

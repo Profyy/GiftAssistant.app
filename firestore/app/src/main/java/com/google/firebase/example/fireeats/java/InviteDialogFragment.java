@@ -2,15 +2,22 @@ package com.google.firebase.example.fireeats.java;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Invitee;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +30,8 @@ import butterknife.Unbinder;
 public class InviteDialogFragment extends DialogFragment {
 
     public static final String TAG = "InviteDialog";
+
+    private FirebaseFirestore mFirestore;
 
     @BindView(R.id.inviteFormText)
     EditText mInviteText;
@@ -77,11 +86,27 @@ public class InviteDialogFragment extends DialogFragment {
 
     @OnClick(R.id.inviteFormButton)
     public void onSubmitClicked(View view) {
+        Bundle args = getArguments();
+        String eventId = args.getString("eventId");
+
+        mFirestore = FirebaseFirestore.getInstance();
+        WriteBatch batch = mFirestore.batch();
+        DocumentReference restRef = mFirestore.collection("events").document(eventId).collection("invited").document();
+
         Invitee invitee = new Invitee(mInviteText.getText().toString());
 
-        if (mInviteListener != null) {
-            mInviteListener.onInvite(invitee);
-        }
+        batch.set(restRef, invitee);
+
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Write batch succeeded.");
+                } else {
+                    Log.w(TAG, "write batch failed.", task.getException());
+                }
+            }
+        });
 
         dismiss();
     }
