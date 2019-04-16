@@ -56,6 +56,7 @@ public class EventDatailActivity extends AppCompatActivity
     private FirebaseFirestore mFirestore;
     private DocumentReference mEventRef;
     private ListenerRegistration mEventRegistration;
+    private InviteDialogFragment mInviteDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class EventDatailActivity extends AppCompatActivity
 
         // Get reference to the event
         mEventRef = mFirestore.collection("events").document(eventId);
+        mInviteDialog = new InviteDialogFragment();
     }
 
     @Override
@@ -118,6 +120,11 @@ public class EventDatailActivity extends AppCompatActivity
         Glide.with(mImageView.getContext())
                 .load(event.getPhoto())
                 .into(mImageView);
+    }
+
+    @OnClick(R.id.fabShowInviteDialog)
+    public void onInviteClicked(View view) {
+        mInviteDialog.show(getSupportFragmentManager(), InviteDialogFragment.TAG);
     }
 
     @OnClick(R.id.restaurantButtonBack)
