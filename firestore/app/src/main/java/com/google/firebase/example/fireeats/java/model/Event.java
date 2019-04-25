@@ -6,19 +6,23 @@ public class Event {
 
     public static final String FIELD_TYPE = "type";
     private Date created;
+    private String name;
+    private String email;
     private String type;
-    private String host;
     private String date;
     private String time;
     private String city;
     private String country;
     private String photo;
 
+
     public Event() {}
-    public Event(String type, String host, String date, String time, String country, String city) {
+
+    public Event(String type, String date, String time, String country, String city, String name, String email) {
         this.created = new Date();
+        this.name = name;
+        this.email = email;
         this.type = type;
-        this.host = host;
         this.date = date;
         this.time = time;
         this.city = city;
@@ -39,14 +43,6 @@ public class Event {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
     }
 
     public String getDate() {
@@ -88,4 +84,21 @@ public class Event {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

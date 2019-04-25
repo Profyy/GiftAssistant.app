@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Event;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,9 +33,14 @@ public class NewItemActivity extends BaseActivity {
     private static final String REQUIRED = "Required";
 
     private FirebaseFirestore mFirestore;
+    private FirebaseUser user;
+
+    private String email;
+    private String name;
 
     private Spinner spinnerType;
-    private EditText mHost;
+    private TextView mName;
+    private TextView mEmail;
     private EditText mDate;
     private EditText mTime;
     private Spinner spinnerCountry;
@@ -49,6 +57,11 @@ public class NewItemActivity extends BaseActivity {
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
+        //Firebase user
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        email = user.getEmail();
+        name = user.getDisplayName();
+
 
         // Type
         Context context=getApplicationContext();
@@ -61,8 +74,13 @@ public class NewItemActivity extends BaseActivity {
         spinnerType = (Spinner) findViewById(R.id.spinnerCategory);
         spinnerType.setAdapter(spinnerArrayAdapterType);
 
-        // Host
-        mHost = findViewById(R.id.host);
+        // Name
+        mName = findViewById(R.id.name);
+        mName.setText(name);
+
+        // Email
+        mEmail = findViewById(R.id.email);
+        mEmail.setText(email);
 
         // Date
         mDate = findViewById(R.id.fieldDate);
@@ -115,8 +133,10 @@ public class NewItemActivity extends BaseActivity {
     }
 
     private void onCreateNewEventClicked() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user.getEmail();
+        String name = user.getDisplayName();
         String type = spinnerType.getSelectedItem().toString();
-        String host = mHost.getText().toString();
         String date = mDate.getText().toString();
         String time = mTime.getText().toString();
         String country = spinnerCountry.getSelectedItem().toString();
@@ -125,7 +145,7 @@ public class NewItemActivity extends BaseActivity {
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document();
 
-        Event event = new Event(type, host, date, time, country, city);
+        Event event = new Event(type, date, time, country, city, name ,email);
 
 
         // Add event

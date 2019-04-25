@@ -23,10 +23,13 @@
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="16dp"
         android:textSize="30sp"
-        android:entries="@array/categories" />
+        android:entries="@array/categories">
+        <requestFocus />
+    </Spinner>
 
-    <EditText
-        android:id="@+id/host"
+    <TextView
+        android:id="@+id/name"
+        style="@style/AppTheme.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinnerCategory"
@@ -36,16 +39,35 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
         android:gravity="center_horizontal"
+        android:hint="Name"
+        android:maxLines="1"
         android:textAlignment="center"
-        android:hint="Host"
-        android:maxLines="1" />
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/email"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_horizontal"
+        android:hint="Email"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/country"
         style="@style/AppTheme.FilterSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/host"
+        android:layout_below="@+id/email"
         android:layout_centerInParent="true"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"

@@ -115,7 +115,7 @@ public class EventDatailActivity extends AppCompatActivity
     }
 
     private void onEventLoaded(Event event) {
-        mHostView.setText(event.getHost());
+        mHostView.setText(event.getName());
         mCityView.setText(event.getCity());
         mTypeView.setText(event.getType());
 

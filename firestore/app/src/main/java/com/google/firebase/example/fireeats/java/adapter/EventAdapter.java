@@ -83,7 +83,7 @@ public class EventAdapter extends FirestoreAdapter<EventAdapter.ViewHolder> {
                     .load(event.getPhoto())
                     .into(imageView);
 
-            eventHostName.setText(event.getHost());
+            eventHostName.setText(event.getName());
             eventItemType.setText(event.getType());
             eventItemDate.setText(event.getDate());
             eventItemTime.setText(event.getTime() + ",");
