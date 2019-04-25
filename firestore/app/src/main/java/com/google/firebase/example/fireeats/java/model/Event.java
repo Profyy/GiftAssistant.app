@@ -78,6 +78,22 @@ public class Event {
     }
 
     public String getPhoto() {
+        if(type.equals("Birhday")){
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/birthday.png?alt=media&token=d9baaf95-f9e6-43e9-9f59-31d6bf6f19ef";
+        } else if(type.equals("Graduate")) {
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/graduate.jpg?alt=media&token=9e066188-9d85-45b2-859d-90d8c8a9d669";
+        } else if(type.equals("Wedding")) {
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/wedding.jpg?alt=media&token=31017c2a-29c5-407b-abd5-a5d0c2c2d73c";
+        }
+        else if(type.equals("Bachelorette")) {
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/bachelorette.jpg?alt=media&token=645011b0-0a86-4da5-bba3-e5a7a2d94dcf";
+        }
+        else if (type.equals("Bachelore")) {
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/bachelor.jpg?alt=media&token=b65a3362-ffa9-4f86-9d3f-1a28dfdbdb0e";
+        }
+        else {
+            photo = "https://firebasestorage.googleapis.com/v0/b/friendlychat-179ac.appspot.com/o/common.jpg?alt=media&token=2cb06155-e11a-4579-8565-3fcbde5daa5b";
+        }
         return photo;
     }
 
