@@ -1,7 +1,9 @@
 package com.google.firebase.example.fireeats.java;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Event;
 import com.google.firebase.firestore.DocumentReference;
@@ -54,6 +58,9 @@ public class EventDatailActivity extends AppCompatActivity
     RecyclerView mRatingsRecycler;
 
     private FirebaseFirestore mFirestore;
+    private FirebaseUser user;
+    private String email;
+
     private DocumentReference mEventRef;
     private ListenerRegistration mEventRegistration;
     private InviteDialogFragment mInviteDialog;
@@ -72,6 +79,9 @@ public class EventDatailActivity extends AppCompatActivity
 
         // Initialize Firestore
         mFirestore = FirebaseFirestore.getInstance();
+
+        //Firebase user
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         // Get reference to the event
         mEventRef = mFirestore.collection("events").document(eventId);
@@ -114,10 +124,15 @@ public class EventDatailActivity extends AppCompatActivity
         onEventLoaded(snapshot.toObject(Event.class));
     }
 
+    @SuppressLint("RestrictedApi")
     private void onEventLoaded(Event event) {
         mHostView.setText(event.getName());
         mCityView.setText(event.getCity());
         mTypeView.setText(event.getType());
+        FloatingActionButton fabShowInviteDialog = (FloatingActionButton)findViewById(R.id.fabShowInviteDialog);
+        if(!event.getEmail().equals( user.getEmail() )) {
+            fabShowInviteDialog.setVisibility(View.GONE);
+        }
 
         // Background image
         Glide.with(mImageView.getContext())
