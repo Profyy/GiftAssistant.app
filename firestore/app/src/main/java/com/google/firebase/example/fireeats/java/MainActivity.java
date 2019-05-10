@@ -161,11 +161,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_sign_out:
-                AuthUI.getInstance().signOut(this);
-                startSignIn();
-                break;
+                switch (item.getItemId()) {
+                    case R.id.menu_sign_out:
+                        AuthUI.getInstance().signOut(this);
+                        startSignIn();
+                        break;
         }
         return super.onOptionsItemSelected(item);
     }

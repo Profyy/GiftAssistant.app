@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -17,13 +18,16 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.adapter.InviteesAdapter;
 import com.google.firebase.example.fireeats.java.model.Event;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +69,11 @@ public class EventDatailActivity extends AppCompatActivity
     private ListenerRegistration mEventRegistration;
     private InviteDialogFragment mInviteDialog;
 
+
+    private CollectionReference mInviteesRef;
+
+    private InviteesAdapter mInviteesAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,19 +98,39 @@ public class EventDatailActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putString("eventId", eventId);
         mInviteDialog.setArguments(args);
+        mInviteesRef = mEventRef.collection("invited");
+
+        // Get invitees
+        Query inviteesQuery = mInviteesRef.limit(50);
+
+        // RecyclerView
+        mInviteesAdapter = new InviteesAdapter(inviteesQuery) {
+            @Override
+            protected void onDataChanged() {
+                if (getItemCount() == 0) {
+                    mRatingsRecycler.setVisibility(View.GONE);
+                    mEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mRatingsRecycler.setVisibility(View.VISIBLE);
+                    mEmptyView.setVisibility(View.GONE);
+                }
+            }
+        };
+        mRatingsRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRatingsRecycler.setAdapter(mInviteesAdapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
+        mInviteesAdapter.startListening();
         mEventRegistration = mEventRef.addSnapshotListener(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
+        mInviteesAdapter.stopListening();
         if (mEventRegistration != null) {
             mEventRegistration.remove();
             mEventRegistration = null;
@@ -132,6 +161,7 @@ public class EventDatailActivity extends AppCompatActivity
         FloatingActionButton fabShowInviteDialog = (FloatingActionButton)findViewById(R.id.fabShowInviteDialog);
         if(!event.getEmail().equals( user.getEmail() )) {
             fabShowInviteDialog.setVisibility(View.GONE);
+
         }
 
         // Background image

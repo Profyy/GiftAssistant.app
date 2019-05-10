@@ -115,7 +115,7 @@
         android:paddingBottom="16dp"
         android:paddingTop="28dp"
         android:visibility="gone"
-        tools:listitem="@layout/item_rating" />
+        tools:listitem="@layout/event_invitees" />
 
     <!-- View for empty ratings -->
     <LinearLayout

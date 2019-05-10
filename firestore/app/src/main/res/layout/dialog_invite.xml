@@ -13,10 +13,18 @@
         android:text="@string/invite" />
 
     <EditText
-        android:id="@+id/inviteFormText"
+        android:id="@+id/inviteName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:hint="Enter invitee name" />
+
+    <EditText
+        android:id="@+id/inviteEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/inviteName"
         android:hint="@string/hint_review" />
 
     <LinearLayout

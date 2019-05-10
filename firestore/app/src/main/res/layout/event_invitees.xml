@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+    android:id="@+id/name"
+    style="@style/AppTheme.Body1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/greySecondary"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:layout_alignParentLeft="true"
+    tools:text="My name" />
+
+    <TextView
+        android:id="@+id/email"
+        style="@style/AppTheme.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/greySecondary"
+        android:layout_below="@+id/name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_alignParentLeft="true"
+        tools:text="mail@mail.com" />
+
+</RelativeLayout>

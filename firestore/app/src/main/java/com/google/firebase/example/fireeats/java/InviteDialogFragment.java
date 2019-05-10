@@ -33,8 +33,11 @@ public class InviteDialogFragment extends DialogFragment {
 
     private FirebaseFirestore mFirestore;
 
-    @BindView(R.id.inviteFormText)
-    EditText mInviteText;
+    @BindView(R.id.inviteName)
+    EditText mInviteName;
+
+    @BindView(R.id.inviteEmail)
+    EditText mInviteEmail;
 
     interface InviteListener {
 
@@ -93,7 +96,7 @@ public class InviteDialogFragment extends DialogFragment {
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document(eventId).collection("invited").document();
 
-        Invitee invitee = new Invitee(mInviteText.getText().toString());
+        Invitee invitee = new Invitee(mInviteName.getText().toString(), mInviteEmail.getText().toString());
 
         batch.set(restRef, invitee);
 
