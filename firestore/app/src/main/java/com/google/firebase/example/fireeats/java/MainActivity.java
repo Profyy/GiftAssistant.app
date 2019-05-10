@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements
             startSignIn();
             return;
         }
-
+        getSupportActionBar().setSubtitle("Hello, " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         // Apply filters
         onFilter(mViewModel.getFilters());
 
