@@ -18,8 +18,11 @@ import butterknife.ButterKnife;
 
 public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
 
-    public GiftsAdapter(Query query) {
+    private Boolean isOwner;
+
+    public GiftsAdapter(Query query, Boolean isOwner) {
         super(query);
+        this.isOwner = isOwner;
     }
 
 
@@ -32,6 +35,9 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(GiftsAdapter.ViewHolder holder, int position) {
         holder.bind(getSnapshot(position).toObject(Gift.class));
+        if(isOwner) {
+            holder.mbtnReserve.setVisibility(View.GONE);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,6 +51,8 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
         @BindView(R.id.url)
         TextView mUrl;
 
+        @BindView(R.id.btnReserve)
+        TextView mbtnReserve;
 
 
         public ViewHolder(View itemView) {

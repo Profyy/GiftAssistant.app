@@ -127,8 +127,8 @@
         android:layout_below="@+id/restaurant_top_card"
         android:background="@android:color/transparent"
         android:clipToPadding="false"
-        android:paddingBottom="16dp"
-        android:paddingTop="28dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
         android:visibility="gone"
         tools:listitem="@layout/event_invitees" />
 

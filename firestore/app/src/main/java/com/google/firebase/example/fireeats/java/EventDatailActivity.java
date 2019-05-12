@@ -76,6 +76,7 @@ public class EventDatailActivity extends AppCompatActivity
     private GiftsAdapter mGiftsAdapter;
 
     private String eventId;
+    private boolean isOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +107,9 @@ public class EventDatailActivity extends AppCompatActivity
         // Get invitees
         Query giftsQuery = mGiftsRef.limit(50);
 
+        isOwner=true;
         // RecyclerView
-        mGiftsAdapter = new GiftsAdapter(giftsQuery) {
+        mGiftsAdapter = new GiftsAdapter(giftsQuery, isOwner) {
             @Override
             protected void onDataChanged() {
                 if (getItemCount() == 0) {
