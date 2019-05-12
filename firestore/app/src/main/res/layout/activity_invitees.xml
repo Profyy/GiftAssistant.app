@@ -93,30 +93,16 @@
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabInvitees"
+        android:id="@+id/fabShowInviteDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/restaurant_top_card"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="-28dp"
-        android:clickable="true"
         app:backgroundTint="@color/fui_bgPhone"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_invitees" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabShowGiftDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/restaurant_top_card"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="-28dp"
         android:clickable="true"
-        app:backgroundTint="@color/fui_bgPhone"
-        app:maxImageSize="32dp"
-        app:srcCompat="@drawable/ic_add_gift3" />
+        app:srcCompat="@drawable/ic_ivnite" />
 
     <!-- Ratings -->
 

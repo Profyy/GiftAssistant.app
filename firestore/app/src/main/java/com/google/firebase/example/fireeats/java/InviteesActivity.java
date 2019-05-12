@@ -2,7 +2,6 @@ package com.google.firebase.example.fireeats.java;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
-import com.google.firebase.example.fireeats.java.adapter.GiftsAdapter;
+import com.google.firebase.example.fireeats.java.adapter.InviteesAdapter;
 import com.google.firebase.example.fireeats.java.model.Event;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,10 +33,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EventDatailActivity extends AppCompatActivity
+public class InviteesActivity extends AppCompatActivity
         implements EventListener<DocumentSnapshot> {
 
-    private static final String TAG = "EventDetail";
+    private static final String TAG = "Invitees";
 
     public static final String KEY_EVENT_ID = "key_event_id";
 
@@ -68,23 +67,21 @@ public class EventDatailActivity extends AppCompatActivity
 
     private DocumentReference mEventRef;
     private ListenerRegistration mEventRegistration;
-    private GiftDialogFragment mGiftsDialog;
+    private InviteDialogFragment mInviteDialog;
 
 
-    private CollectionReference mGiftsRef;
+    private CollectionReference mInviteesRef;
 
-    private GiftsAdapter mGiftsAdapter;
-
-    private String eventId;
+    private InviteesAdapter mInviteesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
+        setContentView(R.layout.activity_invitees);
         ButterKnife.bind(this);
 
         // Get event ID from extras
-        eventId = getIntent().getExtras().getString(KEY_EVENT_ID);
+        String eventId = getIntent().getExtras().getString(KEY_EVENT_ID);
         if (eventId == null) {
             throw new IllegalArgumentException("Must pass extra " + KEY_EVENT_ID);
         }
@@ -97,17 +94,17 @@ public class EventDatailActivity extends AppCompatActivity
 
         // Get reference to the event
         mEventRef = mFirestore.collection("events").document(eventId);
-        mGiftsDialog = new GiftDialogFragment();
+        mInviteDialog = new InviteDialogFragment();
         Bundle args = new Bundle();
         args.putString("eventId", eventId);
-        mGiftsDialog.setArguments(args);
-        mGiftsRef = mEventRef.collection("gifts");
+        mInviteDialog.setArguments(args);
+        mInviteesRef = mEventRef.collection("invited");
 
         // Get invitees
-        Query giftsQuery = mGiftsRef.limit(50);
+        Query inviteesQuery = mInviteesRef.limit(50);
 
         // RecyclerView
-        mGiftsAdapter = new GiftsAdapter(giftsQuery) {
+        mInviteesAdapter = new InviteesAdapter(inviteesQuery) {
             @Override
             protected void onDataChanged() {
                 if (getItemCount() == 0) {
@@ -120,20 +117,20 @@ public class EventDatailActivity extends AppCompatActivity
             }
         };
         mRatingsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRatingsRecycler.setAdapter(mGiftsAdapter);
+        mRatingsRecycler.setAdapter(mInviteesAdapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mGiftsAdapter.startListening();
+        mInviteesAdapter.startListening();
         mEventRegistration = mEventRef.addSnapshotListener(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mGiftsAdapter.stopListening();
+        mInviteesAdapter.stopListening();
         if (mEventRegistration != null) {
             mEventRegistration.remove();
             mEventRegistration = null;
@@ -161,10 +158,10 @@ public class EventDatailActivity extends AppCompatActivity
         mHostView.setText(event.getName());
         mCityView.setText(event.getCity());
         mTypeView.setText(event.getType());
-        FloatingActionButton fabInvitees = (FloatingActionButton)findViewById(R.id.fabInvitees);
+        FloatingActionButton fabShowInviteDialog = (FloatingActionButton)findViewById(R.id.fabShowInviteDialog);
         FloatingActionButton fabShowGiftDialog = (FloatingActionButton)findViewById(R.id.fabShowGiftDialog);
         if(!event.getEmail().equals( user.getEmail() )) {
-            fabInvitees.setVisibility(View.GONE);
+            fabShowInviteDialog.setVisibility(View.GONE);
             fabShowGiftDialog.setVisibility(View.GONE);
         }
 
@@ -174,18 +171,10 @@ public class EventDatailActivity extends AppCompatActivity
                 .into(mImageView);
     }
 
-    @OnClick(R.id.fabInvitees)
+    @OnClick(R.id.fabShowInviteDialog)
     public void onInviteClicked(View view) {
-        Intent intent = new Intent(this, InviteesActivity.class);
-        intent.putExtra(InviteesActivity.KEY_EVENT_ID, eventId);
-        startActivity(intent);
+        mInviteDialog.show(getSupportFragmentManager(), InviteDialogFragment.TAG);
     }
-
-    @OnClick(R.id.fabShowGiftDialog)
-    public void onAddGiftClicked(View view) {
-        mGiftsDialog.show(getSupportFragmentManager(), GiftDialogFragment.TAG);
-    }
-
 
     @OnClick(R.id.restaurantButtonBack)
     public void onBackArrowClicked(View view) {

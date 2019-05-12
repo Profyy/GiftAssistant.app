@@ -31,6 +31,10 @@
         <activity
             android:name=".java.EventDatailActivity"
             android:theme="@style/AppTheme.Activity" />
+
+        <activity
+            android:name=".java.InviteesActivity"
+            android:theme="@style/AppTheme.Activity" />
     </application>
 
 </manifest>
