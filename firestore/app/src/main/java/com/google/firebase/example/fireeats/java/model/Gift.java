@@ -3,6 +3,7 @@ package com.google.firebase.example.fireeats.java.model;
 public class Gift {
     String description;
     String url;
+    Boolean reserved;
 
     public Gift() {}
 
@@ -25,5 +26,17 @@ public class Gift {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void reserve() {
+        reserved = true;
+    }
+
+    public void release() {
+        reserved = false;
+    }
+
+    public Boolean isReserved() {
+        return reserved;
     }
 }

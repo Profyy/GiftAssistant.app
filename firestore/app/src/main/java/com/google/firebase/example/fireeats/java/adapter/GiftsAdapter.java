@@ -36,9 +36,9 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
         holder.bind(getSnapshot(position).toObject(Gift.class));
         Log.d("GiftsAdapter", "isOwner value is: " + isOwner );
         if(isOwner) {
-            holder.mbtnReserve.setVisibility(View.GONE);
+            holder.mbtnReserve.setText("DELETE");
         } else {
-            holder.mbtnReserve.setVisibility(View.VISIBLE);
+            holder.mbtnReserve.setText("RESERVE");
         }
     }
 
@@ -69,6 +69,10 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
         public void bind(Gift gift) {
             mDescription.setText(gift.getDescription());
             mUrl.setText(gift.getUrl());
+//            if(gift.isReserved()) {
+//                mbtnReserve.setText("RESERVED");
+//                mbtnReserve.setBackgroundColor(Color.GRAY);
+//            }
         }
     }
 }
