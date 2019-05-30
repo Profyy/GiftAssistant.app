@@ -25,10 +25,6 @@
             android:theme="@style/AppTheme.Activity" />
 
         <activity
-            android:name=".java.RestaurantDetailActivity"
-            android:theme="@style/AppTheme.Activity" />
-
-        <activity
             android:name=".java.EventDatailActivity"
             android:theme="@style/AppTheme.Activity" />
 

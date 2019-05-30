@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -38,10 +37,8 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements
-        FilterDialogFragment.FilterListener,
     EventAdapter.OnEventSelectedListener {
 
     private String currentUserEmail;
@@ -55,12 +52,6 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.textCurrentSearch)
-    TextView mCurrentSearchView;
-
-    @BindView(R.id.textCurrentSortBy)
-    TextView mCurrentSortByView;
-
     @BindView(R.id.recyclerRestaurants)
     RecyclerView mEventRecycler;
 
@@ -70,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
-    private FilterDialogFragment mFilterDialog;
     private EventAdapter mAdapter;
 
     private MainActivityViewModel mViewModel;
@@ -121,9 +111,6 @@ public class MainActivity extends AppCompatActivity implements
         mEventRecycler.setLayoutManager(new LinearLayoutManager(this));
         mEventRecycler.setAdapter(mAdapter);
 
-        // Filter Dialog
-        mFilterDialog = new FilterDialogFragment();
-
 
         findViewById(R.id.fabCreateNewItem).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements
         }
         getSupportActionBar().setSubtitle("Hello, " + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         // Apply filters
-        onFilter(mViewModel.getFilters());
 
         // Start listening for Firestore updates
         if (mAdapter != null) {
@@ -198,18 +184,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @OnClick(R.id.filterBar)
-    public void onFilterClicked() {
-        // Show the dialog containing filter options
-        mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
-    }
-
-    @OnClick(R.id.buttonClearFilter)
-    public void onClearFilterClicked() {
-        mFilterDialog.resetFilters();
-
-        onFilter(Filters.getDefault());
-    }
 
     @Override
     public void onEventSelected(DocumentSnapshot event) {
@@ -252,11 +226,6 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         });
-    }
-
-    @Override
-    public void onFilter(Filters filters) {
-
     }
 
     private boolean shouldStartSignIn() {
