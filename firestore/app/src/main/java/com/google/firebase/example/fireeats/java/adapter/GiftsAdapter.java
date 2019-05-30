@@ -1,6 +1,7 @@
 package com.google.firebase.example.fireeats.java.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,9 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
 
     private Boolean isOwner;
 
-    public GiftsAdapter(Query query, Boolean isOwner) {
+    public GiftsAdapter(Query query) {
         super(query);
-        this.isOwner = isOwner;
     }
-
 
     @Override
     public GiftsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,9 +34,16 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(GiftsAdapter.ViewHolder holder, int position) {
         holder.bind(getSnapshot(position).toObject(Gift.class));
+        Log.d("GiftsAdapter", "isOwner value is: " + isOwner );
         if(isOwner) {
             holder.mbtnReserve.setVisibility(View.GONE);
+        } else {
+            holder.mbtnReserve.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void isOwner(boolean isOwner) {
+        this.isOwner = isOwner;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

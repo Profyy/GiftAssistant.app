@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +22,13 @@ import android.widget.TextView;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.EventAdapter;
 import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
     EventAdapter.OnEventSelectedListener {
 
+    private String currentUserEmail;
+    private String documentSnapshotEmail;
+    private boolean isOwner;
+
     private static final String TAG = "MainActivity";
-
     private static final int RC_SIGN_IN = 9001;
-
     private static final int LIMIT = 50;
 
     @BindView(R.id.toolbar)
@@ -207,11 +214,44 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onEventSelected(DocumentSnapshot event) {
         // Go to the details page for the selected restaurant
-        Intent intent = new Intent(this, EventDatailActivity.class);
+        final Intent intent = new Intent(this, EventDatailActivity.class);
         intent.putExtra(EventDatailActivity.KEY_EVENT_ID, event.getId());
 
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+        Log.d(TAG, "eventid value is: " + event.getId() );
+
+        DocumentReference mEventRef = mFirestore.collection("events").document(event.getId());
+        mEventRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    // Initialize Firestore
+                    mFirestore = FirebaseFirestore.getInstance();
+
+                    //Firebase user
+                    String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        documentSnapshotEmail = document.getData().get("email").toString();
+                        if(currentUserEmail.equals( documentSnapshotEmail )) {
+                            isOwner=true;
+                        } else {
+                            isOwner=false;
+                        }
+                        intent.putExtra(EventDatailActivity.IS_OWNER, isOwner);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+                        Log.d(TAG, "documentSnapshotEmail value is: " + documentSnapshotEmail );
+                        Log.d(TAG, "currentUserEmail value is: " + currentUserEmail );
+                        Log.d(TAG, "isOwner value is: " + isOwner );
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     @Override

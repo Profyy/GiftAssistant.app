@@ -41,6 +41,8 @@ public class EventDatailActivity extends AppCompatActivity
 
     public static final String KEY_EVENT_ID = "key_event_id";
 
+    public static final String IS_OWNER = "is_owner";
+
     @BindView(R.id.eventImage)
     ImageView mImageView;
 
@@ -107,9 +109,10 @@ public class EventDatailActivity extends AppCompatActivity
         // Get invitees
         Query giftsQuery = mGiftsRef.limit(50);
 
-        isOwner=true;
+        isOwner=getIntent().getExtras().getBoolean(IS_OWNER);
+        Log.d(TAG, "isOwner value is: " + isOwner );
         // RecyclerView
-        mGiftsAdapter = new GiftsAdapter(giftsQuery, isOwner) {
+        mGiftsAdapter = new GiftsAdapter(giftsQuery) {
             @Override
             protected void onDataChanged() {
                 if (getItemCount() == 0) {
@@ -121,6 +124,7 @@ public class EventDatailActivity extends AppCompatActivity
                 }
             }
         };
+        mGiftsAdapter.isOwner(isOwner);
         mRatingsRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRatingsRecycler.setAdapter(mGiftsAdapter);
     }
@@ -165,7 +169,7 @@ public class EventDatailActivity extends AppCompatActivity
         mTypeView.setText(event.getType());
         FloatingActionButton fabInvitees = (FloatingActionButton)findViewById(R.id.fabInvitees);
         FloatingActionButton fabShowGiftDialog = (FloatingActionButton)findViewById(R.id.fabShowGiftDialog);
-        if(!event.getEmail().equals( user.getEmail() )) {
+        if(!isOwner ) {
             fabInvitees.setVisibility(View.GONE);
             fabShowGiftDialog.setVisibility(View.GONE);
         }
