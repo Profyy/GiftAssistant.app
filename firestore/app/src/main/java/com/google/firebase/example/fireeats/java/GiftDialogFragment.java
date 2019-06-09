@@ -96,7 +96,7 @@ public class GiftDialogFragment extends DialogFragment {
         WriteBatch batch = mFirestore.batch();
         DocumentReference restRef = mFirestore.collection("events").document(eventId).collection("gifts").document();
 
-        Gift gift = new Gift(mGiftDescription.getText().toString(), mGiftUrl.getText().toString());
+        Gift gift = new Gift(mGiftDescription.getText().toString(), mGiftUrl.getText().toString(), false);
 
         batch.set(restRef, gift);
 

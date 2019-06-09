@@ -3,13 +3,15 @@ package com.google.firebase.example.fireeats.java.model;
 public class Gift {
     String description;
     String url;
+    String reservedBy;
     Boolean reserved;
 
     public Gift() {}
 
-    public Gift(String description, String url) {
+    public Gift(String description, String url, Boolean reserved) {
         this.description=description;
         this.url=url;
+        this.reserved = reserved;
     }
 
     public String getDescription() {
@@ -39,4 +41,6 @@ public class Gift {
     public Boolean isReserved() {
         return reserved;
     }
+
+
 }

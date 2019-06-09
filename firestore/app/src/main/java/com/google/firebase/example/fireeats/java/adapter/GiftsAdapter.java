@@ -1,18 +1,24 @@
 package com.google.firebase.example.fireeats.java.adapter;
 
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Gift;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,23 +39,16 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(GiftsAdapter.ViewHolder holder, int position) {
-        holder.bind(getSnapshot(position).toObject(Gift.class));
+        DocumentSnapshot snapshot = getSnapshot(position);
+        holder.bind(snapshot);
         Log.d("GiftsAdapter", "isOwner value is: " + isOwner );
-        if(isOwner) {
-            holder.mbtnReserve.setText("DELETE");
-        } else {
-            holder.mbtnReserve.setText("RESERVE");
-        }
     }
 
     public void isOwner(boolean isOwner) {
         this.isOwner = isOwner;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-        private static final SimpleDateFormat FORMAT  = new SimpleDateFormat(
-                "MM/dd/yyyy", Locale.US);
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.description)
         TextView mDescription;
@@ -58,7 +57,7 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
         TextView mUrl;
 
         @BindView(R.id.btnReserve)
-        TextView mbtnReserve;
+        AppCompatButton mbtnReserve;
 
 
         public ViewHolder(View itemView) {
@@ -66,13 +65,44 @@ public class GiftsAdapter extends FirestoreAdapter<GiftsAdapter.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Gift gift) {
+        public void bind(final DocumentSnapshot snapshot) {
+            final DocumentReference docRef = snapshot.getReference();
+            final Gift gift = snapshot.toObject(Gift.class);
             mDescription.setText(gift.getDescription());
             mUrl.setText(gift.getUrl());
-//            if(gift.isReserved()) {
-//                mbtnReserve.setText("RESERVED");
-//                mbtnReserve.setBackgroundColor(Color.GRAY);
-//            }
+
+
+            if(isOwner) {
+                mbtnReserve.setText("DELETE");
+                mbtnReserve.setBackgroundColor(Color.RED);
+            } else {
+                if(gift.isReserved()) {
+                    mbtnReserve.setText("RESERVED");
+                    mbtnReserve.setBackgroundColor(Color.GRAY);
+                } else {
+                    mbtnReserve.setText("RESERVE");
+                    mbtnReserve.setBackgroundColor(Color.parseColor("#FF43C5A5"));
+                }
+            }
+
+            mbtnReserve.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!isOwner) {
+                        docRef.update(
+                                "reserved", true,
+                                "reservedBy", FirebaseAuth.getInstance().getCurrentUser().getEmail()
+                                ).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(itemView.getContext(), "reserved", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
 }
