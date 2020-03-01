@@ -33,7 +33,7 @@
     <string name="divider_bullet">•</string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
-    <string name="message_no_results">Oops, couldn\'t find any results\nthat matched your filter</string>
+    <string name="message_no_results">Създай събитие!</string>
     <string name="message_no_reviews">Създай своя списък с подаръци!</string>
     <string name="hint_review">Enter invitee email</string>
     <string name="submit">Submit</string>
