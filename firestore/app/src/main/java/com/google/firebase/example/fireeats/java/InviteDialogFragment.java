@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Invitee;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 
@@ -110,6 +111,9 @@ public class InviteDialogFragment extends DialogFragment {
                 }
             }
         });
+
+        DocumentReference eventRef = mFirestore.collection("events").document(eventId);
+        eventRef.update("invited", FieldValue.arrayUnion(mInviteEmail.getText().toString()));
 
         dismiss();
     }

@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private FirebaseFirestore mFirestore;
     private Query mQuery;
+    private Query mQuery2;
 
     private EventAdapter mAdapter;
 
@@ -81,13 +82,29 @@ public class MainActivity extends AppCompatActivity implements
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
-        // Get ${LIMIT} restaurants
+        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
+
+                // Get ${LIMIT} restaurants
         mQuery = mFirestore.collection("events")
+                .whereEqualTo("email", currentUserEmail)
+                .orderBy("name", Query.Direction.DESCENDING)
+                .limit(LIMIT);
+
+
+
+        mQuery2 = mFirestore.collection("events")
+                .whereArrayContains("invited", currentUserEmail)
                 .orderBy("name", Query.Direction.DESCENDING)
                 .limit(LIMIT);
 
         // RecyclerView
-        mAdapter = new EventAdapter(mQuery, this) {
+        mAdapter = new EventAdapter(mQuery2, this) {
+
+            @Override
+            protected DocumentSnapshot getSnapshot(int index) {
+                return super.getSnapshot(index);
+            }
+
             @Override
             protected void onDataChanged() {
                 // Show/hide content if the query returns empty.

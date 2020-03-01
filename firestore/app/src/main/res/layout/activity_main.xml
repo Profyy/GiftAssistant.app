@@ -22,11 +22,11 @@
     <!-- Main Restaurants recycler -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerRestaurants"
-        android:fadingEdge="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:background="@android:color/white"
+        android:fadingEdge="horizontal"
         tools:listitem="@layout/item_event" />
 
     <!-- Empty list (pizza guy) view -->

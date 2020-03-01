@@ -1,32 +1,36 @@
 package com.google.firebase.example.fireeats.java.model;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Event {
 
     public static final String FIELD_TYPE = "type";
-    private Date created;
-    private String name;
-    private String email;
-    private String type;
-    private String date;
-    private String time;
-    private String city;
-    private String country;
-    private String photo;
+        private Date created;
+        private String name;
+        private String email;
+        private String type;
+        private String date;
+        private String time;
+        private String city;
+        private String country;
+        private String photo;
+        private List<String> invited;
 
 
     public Event() {}
 
     public Event(String type, String date, String time, String country, String city, String name, String email) {
-        this.created = new Date();
-        this.name = name;
-        this.email = email;
-        this.type = type;
-        this.date = date;
-        this.time = time;
-        this.city = city;
-        this.country = country;
+            this.created = new Date();
+            this.name = name;
+            this.email = email;
+            this.type = type;
+            this.date = date;
+            this.time = time;
+            this.city = city;
+            this.country = country;
+            this.invited = Arrays.asList(email);
     }
 
     public Date getCreated() {
@@ -117,4 +121,5 @@ public class Event {
         this.email = email;
     }
 
+    public List<String> getInvited () { return invited; }
 }
